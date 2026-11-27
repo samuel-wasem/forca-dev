@@ -44,7 +44,7 @@ npm install
 
 ## Configuração do banco
 
-Na pasta `backend`, crie um arquivo `.env` usando `.env.example` como referência. O conteúdo esperado é:
+Na pasta `backend`, copie `.env.example` para `.env`. O conteúdo esperado é:
 
 ```env
 DATABASE_URL="file:../forca.db"
@@ -55,11 +55,11 @@ Ainda na pasta `backend`, execute:
 
 ```bash
 npx prisma generate
-npx prisma db push
+npx prisma migrate dev
 npm run seed
 ```
 
-O comando `db push` cria ou atualiza as tabelas a partir de `prisma/schema.prisma`. O seed cadastra 24 palavras e pode ser executado novamente sem duplicar os registros.
+O comando `prisma migrate dev` aplica a migration versionada em `prisma/migrations/`. O seed cadastra 24 palavras em quatro categorias e pode ser executado novamente sem duplicar os registros.
 
 ## Inicialização
 
@@ -81,6 +81,17 @@ npm run dev
 
 Abra o endereço informado pelo Vite, normalmente `http://localhost:5173`. O proxy do Vite encaminha as chamadas `/api` para a API local; por isso, o back-end deve estar iniciado.
 
+## Testes automatizados
+
+Na pasta `backend`, execute:
+
+```bash
+npm install
+npm test
+```
+
+Os testes automatizados das regras do jogo ficam em `backend/tests/`. O resultado precisa ser conferido no ambiente local antes da entrega.
+
 ## Compilação para conferir os projetos
 
 Na pasta `backend`:
@@ -98,7 +109,7 @@ npm run build
 ## Organização das pastas
 
 ```text
-forca-enzo/
+forca-wasem/
 ├── backend/
 │   ├── prisma/          # schema e seed do banco
 │   ├── src/
