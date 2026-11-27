@@ -1,0 +1,31 @@
+// Schema do Prisma (versão 6.19.3) com SQLite
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Palavra {
+  id        Int       @id @default(autoincrement())
+  texto     String    @unique
+  categoria String
+  partidas  Partida[]
+}
+
+model Partida {
+  id             Int       @id @default(autoincrement())
+  jogador        String
+  palavraId      Int
+  palavra        Palavra   @relation(fields: [palavraId], references: [id])
+  letrasTentadas String    @default("") // ex.: "EPRSMA"
+  vidasRestantes Int       @default(6)
+  status         String    @default("em_andamento") // em_andamento | vitoria | derrota
+  pontos         Int       @default(0)
+  iniciadaEm     DateTime  @default(now())
+  finalizadaEm   DateTime?
+}
